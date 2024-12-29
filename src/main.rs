@@ -1,5 +1,4 @@
 use rand::Rng;
-use std::cmp::Ordering;
 use std::io;
 
 fn main() {
@@ -12,7 +11,7 @@ fn main() {
 
 fn odd_or_event() {
     let num = read_number();
-    let result = if (num % 2 == 1) {
+    let result = if num % 2 == 1 {
         "odd"
     } else {
         "even"
@@ -30,7 +29,8 @@ fn guessing_game() {
 
     let mut number_of_guesses = 0;
     println!("Guess the number!!!");
-    let erm_the_number_of_guesses_again = loop {
+    let mut ur_guess: u32 = 0xFFFFFFFF;
+    while ur_guess != secret_number {
         let mut guess = String::new();
 
         io::stdin()
@@ -38,7 +38,8 @@ fn guessing_game() {
             .expect("Failed to read line");
 
         number_of_guesses += 1;
-        let ur_guess: u32 = match guess.trim().parse() {
+
+        ur_guess = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
                 println!("Bad stuff happened that we don't yet know how to deal with");
@@ -52,12 +53,10 @@ fn guessing_game() {
             println!("Too low!");
         } else if ur_guess > secret_number {
             println!("Too high!");
-        } else {
-            println!("Your guess of {} appears to be correct!", ur_guess);
-            break number_of_guesses;
         }
     };
 
+    println!("Your guess of {} appears to be correct!", ur_guess);
     println!("It took you {} guesses", number_of_guesses);
 }
 
