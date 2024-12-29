@@ -5,8 +5,13 @@ fn main() {
     say_hello_world();
     play_around_with_basic_data_types();
     println!("2+3 = {}", add(2, 3));
-    guessing_game();
+    // guessing_game();
     // odd_or_event();
+
+    let emojis = ["🐈", "🐕", "🐖", "🐄", "🦆"];
+    for emoji in emojis {
+        println!("{} ", emoji);
+    }
 }
 
 fn odd_or_event() {
