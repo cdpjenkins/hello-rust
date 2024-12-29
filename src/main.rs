@@ -8,7 +8,10 @@ fn main() {
     // guessing_game();
     // odd_or_event();
     for_loop_shizzle();
+    fun_with_atrings_and_references();
+}
 
+fn fun_with_atrings_and_references() {
     let s1 = "ston";
     let mut s2 = String::from("hello");
     s2.push_str(" world");
@@ -25,7 +28,7 @@ fn main() {
     let mut s4 = s3.clone();
     s4.push_str(" Wahahahahaha!");
     println!("{}", s4);
-    
+
     print_me_do(&s2);
     print_me_do(&s3);
     print_me_do(&s4);
