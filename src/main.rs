@@ -7,12 +7,26 @@ fn main() {
     println!("2+3 = {}", add(2, 3));
     // guessing_game();
     // odd_or_event();
-    for_loop_shizzle();
-    fun_with_atrings_and_references();
+    // for_loop_shizzle();
+    // fun_with_atrings_and_references();
+    fun_with_slices();
+
+}
+
+fn fun_with_slices() {
+    let hello_world_string = String::from("hello world");
+    let hello = &hello_world_string[0..5];
+    println!("The first 5 characters of hello_world_string are: {}", hello);
+
+    let strings = ["zero", "one", "two", "three", "four", "five"];
+    strings.iter().enumerate().for_each(|(i, s)| {
+        println!("{}: {}", i, s);
+    });
+    let slice = &strings[1..=3];
+    println!("slide: {:?}", slice);
 }
 
 fn fun_with_atrings_and_references() {
-    let s1 = "ston";
     let mut s2 = String::from("hello");
     s2.push_str(" world");
     println!("{}", s2);
