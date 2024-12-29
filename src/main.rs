@@ -7,10 +7,51 @@ fn main() {
     println!("2+3 = {}", add(2, 3));
     // guessing_game();
     // odd_or_event();
+    for_loop_shizzle();
 
+    let s1 = "ston";
+    let mut s2 = String::from("hello");
+    s2.push_str(" world");
+    println!("{}", s2);
+
+    println!("About to do stuff with strings....");
+
+    let mut s3 = String::new();
+    s3.push_str("hello ");
+    s3.push_str("world");
+    s3.push_str("!!!");
+    println!("{}", s3);
+
+    let mut s4 = s3.clone();
+    s4.push_str(" Wahahahahaha!");
+    println!("{}", s4);
+    
+    print_me_do(&s2);
+    print_me_do(&s3);
+    print_me_do(&s4);
+
+    append_stuff_to_string(&mut s4, " moar stuff");
+    print_me_do(&s4);
+}
+
+fn append_stuff_to_string(p0: &mut String, p1: &str) {
+    p0.push_str(p1);
+}
+
+fn print_me_do(p0: &String) {
+    println!("The string is: {p0}");
+    let the_length = p0.len();
+    println!("Length is: {the_length}");
+}
+
+fn for_loop_shizzle() {
     let emojis = ["🐈", "🐕", "🐖", "🐄", "🦆"];
     for emoji in emojis {
         println!("{} ", emoji);
+    }
+
+    for i in 0..10 {
+        println!("{} ", i);
     }
 }
 
