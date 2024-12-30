@@ -21,9 +21,32 @@ fn main() {
         fun_with_atrings_and_references();
     } else if args.contains(&String::from("slices")) {
         fun_with_slices();
+    } else if args.contains(&String::from("structs")) {
+        fun_with_structs();
     }
+}
 
+fn fun_with_structs() {
+    let rectangle = Rectangle {
+        width: 10,
+        height: 15
+    };
 
+    println!("Rectange is {:?}", rectangle);
+    println!("Rectange area is {}", area(&rectangle));
+
+    dbg!(&rectangle);
+    dbg!(&rectangle);
+}
+
+#[derive(Debug)]
+struct Rectangle {
+    width: i32,
+    height: i32
+}
+
+fn area(rectangle: &Rectangle) -> i32 {
+    rectangle.width * rectangle.height
 }
 
 fn fun_with_slices() {
