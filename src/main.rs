@@ -32,6 +32,12 @@ fn fun_with_option()  {
         Some(num) => println!("The number is: {}.", num),
         None => println!("There is no number. At all.")
     };
+
+    if let Some(num) = number {
+        println!("The number is still: {}.", num);
+    } else {
+        println!("There is *still* no number.");
+    }
 }
 
 fn fun_with_structs() {
