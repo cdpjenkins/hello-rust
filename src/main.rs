@@ -1,15 +1,28 @@
 use rand::Rng;
 use std::io;
+use std::env;
 
 fn main() {
-    say_hello_world();
-    play_around_with_basic_data_types();
-    println!("2+3 = {}", add(2, 3));
-    // guessing_game();
-    // odd_or_event();
-    // for_loop_shizzle();
-    // fun_with_atrings_and_references();
-    fun_with_slices();
+    let args: Vec<String> = env::args().collect();
+
+    if args.contains(&String::from("hello")) {
+        say_hello_world();
+    } else if args.contains(&String::from("guess")) {
+        guessing_game();
+    } else if args.contains(&String::from("basic-data-types")) {
+        play_around_with_basic_data_types();
+    } else if args.contains(&String::from("add")) {
+        println!("2+3 = {}", add(2, 3));
+    } else if args.contains(&String::from("odd-or-even")) {
+        odd_or_event();
+    } else if args.contains(&String::from("loops")) {
+        for_loop_shizzle();
+    } else if args.contains(&String::from("atrings")) {
+        fun_with_atrings_and_references();
+    } else if args.contains(&String::from("slices")) {
+        fun_with_slices();
+    }
+
 
 }
 
