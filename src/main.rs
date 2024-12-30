@@ -14,8 +14,24 @@ fn main() {
         "loops" => for_loop_shizzle(),
         "strings" => fun_with_atrings_and_references(),
         "structs" => fun_with_structs(),
+        "slices" => fun_with_slices(),
+        "option" => fun_with_option(),
         _ => println!("Unknown command"),
     }
+}
+
+fn fun_with_option()  {
+    let args: Vec<String> = env::args().collect();
+
+    let number: Option<i32> = match args[2].parse() {
+        Ok(num) => Some(num),
+        Err(_) => None
+    };
+
+    match number {
+        Some(num) => println!("The number is: {}.", num),
+        None => println!("There is no number. At all.")
+    };
 }
 
 fn fun_with_structs() {
@@ -30,8 +46,6 @@ fn fun_with_structs() {
         width: 100,
         height: 100
     };
-
-
 
     println!("rectange1 is {:?}", rectangle1);
     println!("rectange1 area is {}", rectangle1.area());
