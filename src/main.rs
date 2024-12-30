@@ -5,26 +5,16 @@ use std::env;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    dbg!(&args);
-
-    if args.contains(&String::from("hello")) {
-        say_hello_world();
-    } else if args.contains(&String::from("guess")) {
-        guessing_game();
-    } else if args.contains(&String::from("basic-data-types")) {
-        play_around_with_basic_data_types();
-    } else if args.contains(&String::from("add")) {
-        println!("2+3 = {}", add(2, 3));
-    } else if args.contains(&String::from("odd-or-even")) {
-        odd_or_event();
-    } else if args.contains(&String::from("loops")) {
-        for_loop_shizzle();
-    } else if args.contains(&String::from("atrings")) {
-        fun_with_atrings_and_references();
-    } else if args.contains(&String::from("slices")) {
-        fun_with_slices();
-    } else if args.contains(&String::from("structs")) {
-        fun_with_structs();
+    match args[1].as_str() {
+        "hello" => say_hello_world(),
+        "guess" => guessing_game(),
+        "basic-data-types" => play_around_with_basic_data_types(),
+        "add" => println!("2+3 = {}", add(2, 3)),
+        "odd-or-even" => odd_or_event(),
+        "loops" => for_loop_shizzle(),
+        "strings" => fun_with_atrings_and_references(),
+        "structs" => fun_with_structs(),
+        _ => println!("Unknown command"),
     }
 }
 
