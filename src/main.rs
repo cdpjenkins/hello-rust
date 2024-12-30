@@ -5,6 +5,8 @@ use std::env;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
+    dbg!(&args);
+
     if args.contains(&String::from("hello")) {
         say_hello_world();
     } else if args.contains(&String::from("guess")) {
@@ -27,16 +29,34 @@ fn main() {
 }
 
 fn fun_with_structs() {
-    let rectangle = Rectangle {
+    let rectangle1 = Rectangle {
         width: 10,
         height: 15
     };
 
-    println!("Rectange is {:?}", rectangle);
-    println!("Rectange area is {}", area(&rectangle));
+    let little_square = Rectangle::square(5);
 
-    dbg!(&rectangle);
-    dbg!(&rectangle);
+    let big_rectangle = Rectangle {
+        width: 100,
+        height: 100
+    };
+
+
+
+    println!("rectange1 is {:?}", rectangle1);
+    println!("rectange1 area is {}", rectangle1.area());
+
+    if rectangle1.can_hold(&little_square) {
+        println!("rectangle1 can hold little_square");
+    } else {
+        println!("rectangle1 can't hold little_square");
+    }
+
+    if rectangle1.can_hold(&big_rectangle) {
+        println!("rectangle1 can hold big_rectangle");
+    } else {
+        println!("rectangle1 can't hold big_rectangle");
+    }
 }
 
 #[derive(Debug)]
@@ -45,8 +65,21 @@ struct Rectangle {
     height: i32
 }
 
-fn area(rectangle: &Rectangle) -> i32 {
-    rectangle.width * rectangle.height
+impl Rectangle {
+    fn area(&self) -> i32 {
+        self.width * self.height
+    }
+
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+
+    fn square(size: i32) -> Self {
+        Self {
+            width: size,
+            height: size
+        }
+    }
 }
 
 fn fun_with_slices() {
