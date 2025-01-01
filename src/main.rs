@@ -30,9 +30,31 @@ fn hashmaps() {
     scores.insert(String::from("Brian"), 10);
     scores.insert(String::from("Colin"), 20);
 
-    let brian_score = scores.get(&String::from("Brian"));
+    println!("Brian has scored {:?}", scores.get(&String::from("Brian")));
 
-    println!("Brian has scored {:?}", brian_score);
+    // overwrite what is already there
+    scores.insert(String::from("Brian"), 50);
+    println!("Brian has now scored {:?}", scores.get(&String::from("Brian")));
+
+    // insert if not already present
+    scores.entry(String::from("Marmaduke")).or_insert(100);
+    println!("Marmaduke has now scored {:?}", scores.get(&String::from("Marmaduke")));
+
+    // update what is already there
+    let this_score = scores.entry(String::from("Colin")).or_insert(0);
+    *this_score += 1;
+
+
+    println!();
+    println!("Look out, updated scores coming up!");
+    for (dude, score) in scores {
+        println!("{} has scored {}", dude, score);
+    }
+
+    // honestly, I'm still getting used to all this stuff
+    // especially move/copy semantics and ownership and "oops, calling a method on that object
+    // just moved it and now the object can never be used again"
+
 }
 
 fn vectors() {
