@@ -18,8 +18,21 @@ fn main() {
         "slices" => fun_with_slices(),
         "option" => fun_with_option(),
         "vectors" => vectors(),
+        "hashmaps" => hashmaps(),
         _ => println!("Unknown command"),
     }
+}
+
+fn hashmaps() {
+    use std::collections::HashMap;
+
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Brian"), 10);
+    scores.insert(String::from("Colin"), 20);
+
+    let brian_score = scores.get(&String::from("Brian"));
+
+    println!("Brian has scored {:?}", brian_score);
 }
 
 fn vectors() {
