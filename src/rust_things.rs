@@ -1,6 +1,47 @@
 use std::{env, io};
 use rand::Rng;
 
+#[derive(Debug)]
+struct Point<T> {
+    x: T,
+    y: T
+}
+
+impl <T: std::fmt::Debug> Point<T> {
+    fn print_me_do(&self) {
+        println!("{:?}", self);
+    }
+}
+
+fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
+    let mut largest_so_far = &list[0];
+
+    for item in list {
+        if item > largest_so_far {
+            largest_so_far = item;
+        }
+    }
+
+    return largest_so_far;
+}
+
+pub fn fun_with_generics() {
+    println!("generics to come...");
+
+    let list = vec![1,2,3,4,5,6,7,8,7,6,5,4,3,2,1];
+
+    let result = largest(&list);
+
+    println!("the biggest number is: {result}.");
+
+    let p1 = Point { x: 10, y: 20};
+    println!("{:?}", p1);
+
+    let p2 = Point { x: 1.23, y: 4.56};
+    println!("{:?}", p2);
+    p2.print_me_do();
+}
+
 pub fn fun_with_option()  {
     let args: Vec<String> = env::args().collect();
 

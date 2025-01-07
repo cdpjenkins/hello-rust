@@ -19,6 +19,7 @@ fn main() {
         "option" => fun_with_option(),
         "vectors" => vectors(),
         "hashmaps" => hashmaps(),
+        "generics" => fun_with_generics(),
         _ => println!("Unknown command"),
     }
 }
