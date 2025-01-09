@@ -269,3 +269,9 @@ pub fn play_around_with_basic_data_types() {
     let array_with_repeating_values = ["hello!!!!"; 5];
     println!("{:?}", array_with_repeating_values);
 }
+
+pub fn fun_with_panic() {
+    let v = vec![1, 2, 3];
+    v[99];
+    // panic!("Oh noes!");
+}

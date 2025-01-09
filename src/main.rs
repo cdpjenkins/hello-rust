@@ -1,7 +1,9 @@
 mod rust_things;
+mod fun_with_ints;
 
 use crate::rust_things::*;
 use std::env;
+use std::io::Read;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -19,9 +21,30 @@ fn main() {
         "option" => fun_with_option(),
         "vectors" => vectors(),
         "hashmaps" => hashmaps(),
+        "panic" => fun_with_panic(),
+        "result" => fun_with_result(),
         "generics" => fun_with_generics(),
         _ => println!("Unknown command"),
     }
+}
+
+fn fun_with_result() {
+    use std::fs::File;
+
+    // let file = File::open("hello.txt")
+    //     .unwrap_or_else(|error| {
+    //         panic!("There was a problem opening the file: {:?}", error);
+    //     });
+
+    let mut file = File::open("hello.txt").unwrap();
+
+    dbg!(&file);
+
+
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).unwrap();
+
+    println!("The contents of hello.txt are: {}", contents);
 }
 
 fn hashmaps() {
