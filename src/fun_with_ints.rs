@@ -3,6 +3,11 @@
 fn add(a: i32, b: i32) -> i32 { a + b }
 fn subtract(lhs: i32, rhs: i32) -> i32 { lhs - rhs }
 
+pub fn have_fun_with_ints() {
+    println!("1 + 2 = {}", add(1, 2));
+    println!("1 - 2 = {}", subtract(1, 2));
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

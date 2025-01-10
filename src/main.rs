@@ -1,9 +1,12 @@
 mod rust_things;
 mod fun_with_ints;
+mod grep;
 
 use crate::rust_things::*;
+use crate::fun_with_ints::*;
 use std::env;
 use std::io::Read;
+use crate::grep::minigrep;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -24,6 +27,8 @@ fn main() {
         "panic" => fun_with_panic(),
         "result" => fun_with_result(),
         "generics" => fun_with_generics(),
+        "fun-with-ints" => have_fun_with_ints(),
+        "grep" => minigrep(),
         _ => println!("Unknown command"),
     }
 }

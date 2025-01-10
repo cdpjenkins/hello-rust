@@ -1,6 +1,7 @@
 use std::{env, io};
 use rand::Rng;
 
+
 #[derive(Debug)]
 struct Point<T> {
     x: T,
@@ -9,7 +10,7 @@ struct Point<T> {
 
 impl <T: std::fmt::Debug> Point<T> {
     fn print_me_do(&self) {
-        println!("{:?}", self);
+        println!("Point({:?},{:?}", self.x, self.y);
     }
 }
 
