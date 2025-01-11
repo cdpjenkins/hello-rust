@@ -9,4 +9,9 @@ pub fn minigrep() {
 
     println!("Query: {}", query);
     println!("File path: {}", file_path);
+
+    let file_contents = std::fs::read_to_string(file_path)
+        .expect("Unable to read file");
+
+    println!("File contents: {}", file_contents);
 }
