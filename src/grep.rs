@@ -15,27 +15,38 @@ pub fn minigrep() {
     println!("File contents: {}", file_contents);
 }
 
+#[derive(PartialEq, Debug)]
 struct Config {
     query: String,
     file_path: String,
 }
 
-fn parse_config(args: &[String]) -> Config {
-    let query = args[2].clone();
-    let file_path = args[3].clone();
+impl Config {
+    fn of(query: &str, file_path: &str) -> Config {
+        Config {
+            query: query.to_string(),
+            file_path: file_path.to_string()
+        }
+    }
+}
 
-    Config { query, file_path }
+fn parse_config(args: &[String]) -> Config {
+    Config {
+        query: args[2].clone(),
+        file_path: args[3].clone()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::grep::parse_config;
+    use crate::grep::{parse_config, Config};
 
     #[test]
     fn can_parse_config_from_command_line_args() {
-        let config = parse_config(&args_of(&["target/debug/hello-rust", "grep", "This", "hello.txt"]));
-        assert_eq!(config.query, "This".to_string());
-        assert_eq!(config.file_path, "hello.txt".to_string());
+        assert_eq!(
+            parse_config(&args_of(&["target/debug/hello-rust", "grep", "This", "hello.txt"])),
+            Config::of("This", "hello.txt")
+        );
     }
 
     fn args_of(vec2: &[&str]) -> Vec<String> {
