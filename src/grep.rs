@@ -4,7 +4,9 @@ pub fn minigrep() {
 
     dbg!(&args);
 
-    let config = Config::build_from_args(&args);
+    let config =
+        Config::build_from_args(&args)
+            .unwrap();
 
     println!("Query: {}", config.query);
     println!("File path: {}", config.file_path);
@@ -23,11 +25,16 @@ struct Config {
 
 impl Config {
 
-    fn build_from_args(args: &[String]) -> Config {
-        Config {
-            query: args[2].clone(),
-            file_path: args[3].clone()
+    fn build_from_args(args: &[String]) -> Result<Config, &'static str> {
+        if args.len() < 4 {
+            Err("Not enough arguments")
+        } else {
+            Ok(Config {
+                query: args[2].clone(),
+                file_path: args[3].clone()
+            })
         }
+
     }
 }
 
@@ -39,8 +46,17 @@ mod tests {
     fn can_parse_config_from_command_line_args() {
         let args = args_of(&["target/debug/hello-rust", "grep", "This", "hello.txt"]);
         assert_eq!(
-            Config::build_from_args(&args),
+            Config::build_from_args(&args).unwrap(),
             Config::of("This", "hello.txt")
+        );
+    }
+
+    #[test]
+    fn returns_error_if_insufficient_command_line_args() {
+        let args = args_of(&["one", "two"]);
+        assert_eq!(
+            Config::build_from_args(&args),
+            Err("Not enough arguments")
         );
     }
 
