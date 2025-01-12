@@ -6,10 +6,10 @@ pub fn minigrep() {
 
     let config =
         Config::build_from_args(&args)
-            .unwrap();
-
-    println!("Query: {}", config.query);
-    println!("File path: {}", config.file_path);
+            .unwrap_or_else(|err| {
+                println!("Error parsing arguments: {err}");
+                std::process::exit(1);
+        });
 
     let file_contents = std::fs::read_to_string(config.file_path)
         .expect("Unable to read file");
