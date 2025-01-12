@@ -4,7 +4,7 @@ pub fn minigrep() {
 
     dbg!(&args);
 
-    let config = parse_config(&args);
+    let config = Config::build_from_args(&args);
 
     println!("Query: {}", config.query);
     println!("File path: {}", config.file_path);
@@ -22,29 +22,24 @@ struct Config {
 }
 
 impl Config {
-    fn of(query: &str, file_path: &str) -> Config {
-        Config {
-            query: query.to_string(),
-            file_path: file_path.to_string()
-        }
-    }
-}
 
-fn parse_config(args: &[String]) -> Config {
-    Config {
-        query: args[2].clone(),
-        file_path: args[3].clone()
+    fn build_from_args(args: &[String]) -> Config {
+        Config {
+            query: args[2].clone(),
+            file_path: args[3].clone()
+        }
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::grep::{parse_config, Config};
+    use crate::grep::Config;
 
     #[test]
     fn can_parse_config_from_command_line_args() {
+        let args = args_of(&["target/debug/hello-rust", "grep", "This", "hello.txt"]);
         assert_eq!(
-            parse_config(&args_of(&["target/debug/hello-rust", "grep", "This", "hello.txt"])),
+            Config::build_from_args(&args),
             Config::of("This", "hello.txt")
         );
     }
@@ -55,5 +50,14 @@ mod tests {
             .map(|x| x.to_string())
             .collect::<Vec<String>>();
         vec1
+    }
+
+    impl Config {
+        fn of(query: &str, file_path: &str) -> Config {
+            Config {
+                query: query.to_string(),
+                file_path: file_path.to_string()
+            }
+        }
     }
 }
