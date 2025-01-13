@@ -1,3 +1,4 @@
+use std::error::Error;
 
 pub fn minigrep() {
     let args: Vec<String> = std::env::args().collect();
@@ -11,10 +12,18 @@ pub fn minigrep() {
                 std::process::exit(1);
         });
 
-    let file_contents = std::fs::read_to_string(config.file_path)
-        .expect("Unable to read file");
+    if let Err(e) = run(config) {
+        println!("Application error: {e}");
+        std::process::exit(1);
+    }
+}
+
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let file_contents = std::fs::read_to_string(config.file_path)?;
 
     println!("File contents: {}", file_contents);
+
+    Ok(())
 }
 
 #[derive(PartialEq, Debug)]
