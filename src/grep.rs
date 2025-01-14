@@ -3,8 +3,6 @@ use std::error::Error;
 pub fn minigrep() {
     let args: Vec<String> = std::env::args().collect();
 
-    dbg!(&args);
-
     let config =
         Config::build_from_args(&args)
             .unwrap_or_else(|err| {
@@ -21,9 +19,23 @@ pub fn minigrep() {
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let file_contents = std::fs::read_to_string(config.file_path)?;
 
-    println!("File contents: {}", file_contents);
+    for line in search(&config.query, &file_contents) {
+        println!("{line}");
+    }
 
     Ok(())
+}
+
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
 }
 
 #[derive(PartialEq, Debug)]
@@ -49,7 +61,20 @@ impl Config {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     use crate::grep::Config;
+
+    #[test]
+    fn one_result() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+    }
 
     #[test]
     fn can_parse_config_from_command_line_args() {
