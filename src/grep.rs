@@ -1,3 +1,4 @@
+use std::env;
 use std::error::Error;
 
 pub fn minigrep() {
@@ -19,7 +20,12 @@ pub fn minigrep() {
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let file_contents = std::fs::read_to_string(config.file_path)?;
 
-    for line in search(&config.query, &file_contents) {
+    let results = if config.ignore_case {
+        search_case_insensitive(&config.query, &file_contents)
+    } else {
+        search(&config.query, &file_contents)
+    };
+    for line in results {
         println!("{line}");
     }
 
@@ -39,20 +45,22 @@ fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 struct Config {
     query: String,
     file_path: String,
+    ignore_case: bool
 }
 
 impl Config {
-
     fn build_from_args(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 4 {
             Err("Not enough arguments")
         } else {
+            let ignore_case = env::var("IGNORE_CASE").is_ok();
+
             Ok(Config {
                 query: args[2].clone(),
-                file_path: args[3].clone()
+                file_path: args[3].clone(),
+                ignore_case
             })
         }
-
     }
 }
 
@@ -94,7 +102,7 @@ Trust me.";
         let args = args_of(&["target/debug/hello-rust", "grep", "This", "hello.txt"]);
         assert_eq!(
             Config::build_from_args(&args).unwrap(),
-            Config::of("This", "hello.txt")
+            Config::of("This", "hello.txt", false)
         );
     }
 
@@ -116,10 +124,11 @@ Trust me.";
     }
 
     impl Config {
-        fn of(query: &str, file_path: &str) -> Config {
+        fn of(query: &str, file_path: &str, ignore_case: bool) -> Config {
             Config {
                 query: query.to_string(),
-                file_path: file_path.to_string()
+                file_path: file_path.to_string(),
+                ignore_case: ignore_case
             }
         }
     }
