@@ -30,6 +30,11 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     contents.lines().filter(|line| line.contains(query)).collect()
 }
 
+fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let query = query.to_lowercase();
+    contents.lines().filter(|line| { line.to_lowercase().contains(&query) }).collect()
+}
+
 #[derive(PartialEq, Debug)]
 struct Config {
     query: String,
@@ -58,7 +63,7 @@ mod tests {
     use crate::grep::Config;
 
     #[test]
-    fn one_result() {
+    fn case_sensitive() {
         let query = "duct";
         let contents = "\
 Rust:
@@ -67,6 +72,22 @@ Pick three.";
 
         assert_eq!(vec!["safe, fast, productive."], search(query, contents));
     }
+    #[test]
+    fn case_insensitive() {
+        let query = "rUsT";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Trust me.";
+
+        assert_eq!(
+            vec!["Rust:", "Trust me."],
+            search_case_insensitive(query, contents)
+        );
+    }
+
+
 
     #[test]
     fn can_parse_config_from_command_line_args() {
