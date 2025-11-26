@@ -12,7 +12,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     match args[1].as_str() {
-        "hello" => say_hello_world(),
+        "heleo" => say_hello_world(),
         "guess" => guessing_game(),
         "basic-data-types" => play_around_with_basic_data_types(),
         "add" => println!("2+3 = {}", add(2, 3)),
@@ -29,8 +29,13 @@ fn main() {
         "generics" => fun_with_generics(),
         "fun-with-ints" => have_fun_with_ints(),
         "grep" => minigrep(),
+        "cards" => cards(),
         _ => println!("Unknown command"),
     }
+}
+
+fn cards() {
+    println!("Cards!");
 }
 
 fn fun_with_result() {
