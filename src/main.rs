@@ -34,8 +34,15 @@ fn main() {
     }
 }
 
+#[derive(Debug)]
+struct Deck {
+    cards: Vec<String>,
+}
 fn cards() {
-    println!("Cards!");
+
+    let deck = Deck { cards: vec![] };
+
+    println!("Here's your deck: {:?}", deck);
 }
 
 fn fun_with_result() {
